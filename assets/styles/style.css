@@ -31,10 +31,11 @@ button[data-action="hide"] {
 div.list-container {
   overflow: hidden;
   transition: height 0.3s ease-out;
+  margin-left:20px;
 }
 
 div.show {
-  height: 200px;
+  height: auto;
 }
 
 div.hide {
@@ -42,11 +43,44 @@ div.hide {
 }
 
 li {
-   list-style: none;
+  list-style: none; 
+  overflow: hidden;
+  transition: height 0.3s ease-out;
 }
 
 li.clean {
   height: 0px;
-  overflow: hidden;
+ 
+}
+
+button[data-action="add"] {
+  background-color: rgb(6, 240, 240);
+}
+
+div.add-list {
+  margin-left: 30px;
+  max-width: 200px;
+  overflow: hidden;  
   transition: height 0.3s ease-out;
+  text-align: center;
+}
+
+div.close {
+ height: 0px;
+}
+
+div.open {
+  height: 150px;
+}
+
+input[type='submit']  {
+  margin-top: 10px;
+}
+
+input[type='button'] {
+  margin-top: 5px;
+}
+
+main {
+  display: flex;
 }
