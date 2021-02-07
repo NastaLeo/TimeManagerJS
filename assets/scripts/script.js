@@ -73,13 +73,17 @@ function createNewTask(){
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('id', +id + 1);
-    newTask.prepend(input);
+    newTask.append(input);
 
     let label = document.createElement('label');
     label.setAttribute('for', +id + 1);
+    label.style = 'padding-left:5px';
     label.innerHTML = inputText.value;
-    input.prepend(label);
-    console.log(label)    
+    newTask.append(label);
+    
+    if (Array.from(list.children).some(el => el.className === 'clean')) {
+        newTask.classList.add('clean')
+    }
     
     inputText.value = '';
 }
