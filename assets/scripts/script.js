@@ -36,6 +36,7 @@ function hide(elem) {
     } 
 }
 
+
 function show(elem) {
     if (elem.dataset.action === 'show') {
         elem.classList.add('active');
@@ -95,8 +96,10 @@ inputClose.addEventListener('click', function() {
 list.addEventListener('click', function(event) {
     if (event.target.tagName != 'INPUT') {
         return
+    } else if (buttonShow.className === 'active') {
+        return
     } else if (event.target.closest('li').firstElementChild.checked != true) {
-        event.target.closest('li').classList.add('clean');
+        event.target.closest('li').classList.toggle('clean');
     }
 })
 
