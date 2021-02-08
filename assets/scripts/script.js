@@ -4,6 +4,7 @@ let buttonHide = document.querySelector('button[data-action=hide]');
 let buttonAdd = document.querySelector('button[data-action=add]');
 
 let addList = document.querySelector('.add-list');
+let form = document.querySelector('form');
 let inputText = document.querySelector('input[type=text]');
 let inputSubmit = document.querySelector('input[type=submit]');
 let inputReset = document.querySelector('input[type=reset]');
@@ -55,7 +56,7 @@ function add(elem) {
 }
 
 
-inputSubmit.addEventListener('click', function(event) {
+form.addEventListener('submit', function(event) {
     event.preventDefault();
     if (inputText.value != '') {
         createNewTask();
