@@ -26,7 +26,7 @@ buttons.addEventListener('click', function(event) {
 
 function hide(elem) {
     if (elem.dataset.action === 'hide') {
-        elem.classList.remove('active');
+        buttonHide.classList.remove('active');
         buttonShow.classList.add('active');
 
         
@@ -41,7 +41,7 @@ function hide(elem) {
 
 function show(elem) {
     if (elem.dataset.action === 'show') {
-        elem.classList.remove('active');
+        buttonShow.classList.remove('active');
         buttonHide.classList.add('active');
 
         for(item of li) {
@@ -53,6 +53,7 @@ function show(elem) {
 function add(elem) {
     if (elem.dataset.action === 'add') {
         addList.classList.add('open');
+        buttonAdd.classList.remove('active');
     }
 }
 
@@ -96,6 +97,7 @@ inputReset.addEventListener('click', function(){
 
 inputClose.addEventListener('click', function() {
     addList.classList.remove('open');
+    buttonAdd.classList.add('active');
 })
 
 
