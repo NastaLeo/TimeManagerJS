@@ -26,8 +26,9 @@ buttons.addEventListener('click', function(event) {
 
 function hide(elem) {
     if (elem.dataset.action === 'hide') {
-        elem.classList.add('active');
-        buttonShow.classList.remove('active');
+        elem.classList.remove('active');
+        buttonShow.classList.add('active');
+
         
         for(item of li) {
             if (item.firstElementChild.checked != true) {
@@ -40,8 +41,8 @@ function hide(elem) {
 
 function show(elem) {
     if (elem.dataset.action === 'show') {
-        elem.classList.add('active');
-        buttonHide.classList.remove('active');
+        elem.classList.remove('active');
+        buttonHide.classList.add('active');
 
         for(item of li) {
             item.classList.remove('clean');
@@ -82,10 +83,10 @@ function createNewTask(){
     label.innerHTML = inputText.value;
     newTask.append(label);
     
-    if (Array.from(list.children).some(el => el.className === 'clean')) {
+    if (buttonShow.className === 'active') {
         newTask.classList.add('clean')
     }
-    
+
     inputText.value = '';
 }
 
