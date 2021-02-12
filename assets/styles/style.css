@@ -36,6 +36,7 @@ div.list-container {
 
 li {
   height: 20px;
+  vertical-align: middle;
   list-style: none; 
   overflow: hidden;
   transition: height 0.3s ease-out;
@@ -65,6 +66,13 @@ div.open {
   height: 150px;
 }
 
+form input {
+  outline: none;
+  border: 1px solid rgb(29, 161, 161);
+  height: 20px;
+  border-radius: 20px;
+}
+
 input[type='text'] {
   margin-top: 20px;
 }
@@ -80,3 +88,4 @@ input[type='button'] {
 main {
   display: flex;
 }
+

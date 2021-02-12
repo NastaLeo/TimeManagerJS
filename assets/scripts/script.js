@@ -15,6 +15,7 @@ let li = document.getElementsByTagName('li');
 
 
 
+// Обратчик на кнопки
 buttons.addEventListener('click', function(event) {
     if (event.target.tagName != 'BUTTON') return;
     if (event.target.tagName == 'BUTTON') {
@@ -24,6 +25,9 @@ buttons.addEventListener('click', function(event) {
     }
 })
 
+
+
+// Спрятать список задач
 function hide(elem) {
     if (elem.dataset.action === 'hide') {
         buttonHide.classList.remove('active');
@@ -39,6 +43,8 @@ function hide(elem) {
 }
 
 
+
+// Показать список задач
 function show(elem) {
     if (elem.dataset.action === 'show') {
         buttonShow.classList.remove('active');
@@ -50,13 +56,16 @@ function show(elem) {
     }
 }  
 
+
+
+// Добавить новые задачи в список задач
 function add(elem) {
     if (elem.dataset.action === 'add') {
+        addList.classList.remove('close');
         addList.classList.add('open');
         buttonAdd.classList.remove('active');
     }
 }
-
 
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -66,24 +75,28 @@ form.addEventListener('submit', function(event) {
     
 })
 
-
 function createNewTask(){
-    let id = list.lastElementChild.firstElementChild.id;
-    
     let newTask = document.createElement('li');
     list.append(newTask);
 
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
-    input.setAttribute('id', +id + 1);
+    if (!newTask.previousElementSibling) {
+        input.setAttribute('id',  0);
+    } else {
+        input.setAttribute('id',  +newTask.previousElementSibling.firstElementChild.id + 1);
+    }
     newTask.append(input);
 
     let label = document.createElement('label');
-    label.setAttribute('for', +id + 1);
+    let id = +newTask.firstElementChild.id;
+    label.setAttribute('for', id);
     label.style = 'padding-left:5px';
     label.innerHTML = inputText.value;
     newTask.append(label);
-    
+
+    localStorage.setItem(id, label.innerHTML);
+
     if (buttonShow.className === 'active') {
         newTask.classList.add('clean')
     }
@@ -97,18 +110,20 @@ inputReset.addEventListener('click', function(){
 
 inputClose.addEventListener('click', function() {
     addList.classList.remove('open');
+    addList.classList.add('close');
     buttonAdd.classList.add('active');
 })
 
 
+
+// Перенос задачи после снятия отметки в скрытый список
 list.addEventListener('click', function(event) {
     if (event.target.tagName != 'INPUT') {
         return
-    } else if (buttonShow.className === 'active') {
+    } else if (buttonHide.className === 'active') {
         return
     } else if (event.target.closest('li').firstElementChild.checked != true) {
         event.target.closest('li').classList.toggle('clean');
     }
 })
-
 
