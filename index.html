@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-
+<div class="wrapper">
   <div class="buttons-container">
     <button data-action="add" class="active">Добавить задачу</button>
     <button data-action="show">Показать список</button>
@@ -15,24 +15,23 @@
   </div>
 
 
-<main>
-  <div class='add-list close'>
-    <form>
-      <input type="text" name='text' placeholder=' Новая задача' value=''></br>
-      <input type="submit" name="submit" value='Добавить'>
-      <input type="reset" name="reset" value='Сбросить'></br>
-      <input type="button" name="close" value='Завершить'>
-    </form>
-  </div>
+  <main>
+     <div class='add-list close'>
+      <form>
+        <input type="text" name='text' placeholder=' Новая задача' value=''></br>
+        <input type="submit" name="submit" value='Добавить'>
+        <input type="button" name="close" value='Завершить'>
+      </form>
+    </div>
    
     <div class="list-container show">
       <ul>
         Список дел:
       </ul>
     </div>
-</main>
-    
-    <script src="./assets/scripts/script.js"></script>
+  </main>
+</div>    
+  <script src="./assets/scripts/script.js"></script>
 </body>
 </html>
 

@@ -36,14 +36,20 @@ div.list-container {
 
 li {
   height: 20px;
+  /* width: 300px; */
   vertical-align: middle;
   list-style: none; 
   overflow: hidden;
   transition: height 0.3s ease-out;
 }
 
+
 li.clean {
   height: 0px;
+}
+
+li input {
+  cursor: pointer;
 }
 
 button[data-action="add"] {
@@ -75,14 +81,16 @@ form input {
 
 input[type='text'] {
   margin-top: 20px;
+  text-indent: 10px;
 }
 
 input[type='submit']  {
   margin-top: 10px;
+  cursor: pointer;
 }
 
 input[type='button'] {
-  margin-top: 5px;
+  cursor: pointer;
 }
 
 main {

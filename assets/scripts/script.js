@@ -26,7 +26,6 @@ buttons.addEventListener('click', function(event) {
 })
 
 
-
 // Спрятать список задач
 function hide(elem) {
     if (elem.dataset.action === 'hide') {
@@ -36,12 +35,12 @@ function hide(elem) {
         
         for(item of li) {
             if (item.firstElementChild.checked != true) {
+                console.log(1)
             item.classList.add('clean');
             }
         }
     } 
 }
-
 
 
 // Показать список задач
@@ -57,7 +56,6 @@ function show(elem) {
 }  
 
 
-
 // Добавить новые задачи в список задач
 function add(elem) {
     if (elem.dataset.action === 'add') {
@@ -67,47 +65,58 @@ function add(elem) {
     }
 }
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    if (inputText.value != '') {
-        createNewTask();
-    } else return    
-    
-})
 
+//Создать новую задачу
 function createNewTask(){
     let newTask = document.createElement('li');
     list.append(newTask);
 
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
+    let label = document.createElement('label');
+
     if (!newTask.previousElementSibling) {
         input.setAttribute('id',  0);
+        label.setAttribute('for',  0);
     } else {
-        input.setAttribute('id',  +newTask.previousElementSibling.firstElementChild.id + 1);
+        input.setAttribute('id', +newTask.previousElementSibling.firstElementChild.getAttribute('id') + 1);
+        label.setAttribute('for', +input.getAttribute('id'));
     }
-    newTask.append(input);
-
-    let label = document.createElement('label');
-    let id = +newTask.firstElementChild.id;
-    label.setAttribute('for', id);
-    label.style = 'padding-left:5px';
+    label.style.paddingLeft = '5px';
     label.innerHTML = inputText.value;
+    newTask.append(input);
     newTask.append(label);
 
-    localStorage.setItem(id, label.innerHTML);
+    let buttonDelete = document.createElement('img');
+    buttonDelete.className = 'delete';
+    buttonDelete.style.marginLeft ='10px';
+    buttonDelete.style.verticalAlign = 'middle';
+    buttonDelete.style.width = '15px';
+    buttonDelete.style.height ='15px';
+    buttonDelete.setAttribute('src','./assets/images/rubbish.png');
+    buttonDelete.style.opacity = '.6';
+    newTask.append(buttonDelete);
+
+    localStorage.setItem(label.getAttribute('for'), label.innerHTML);
 
     if (buttonShow.className === 'active') {
         newTask.classList.add('clean')
     }
-
-    inputText.value = '';
 }
 
-inputReset.addEventListener('click', function(){
-    inputText.value = '';
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+  
+    if (inputText.value != '') {
+        createNewTask();
+        inputText.value = '';
+    } else {
+        return    
+    }
 })
 
+//Закрыть окно создания задач
 inputClose.addEventListener('click', function() {
     addList.classList.remove('open');
     addList.classList.add('close');
@@ -115,9 +124,44 @@ inputClose.addEventListener('click', function() {
 })
 
 
+//Удаление задач
+function deleteTask(event) {
+    if (event.target.className != 'delete'){
+        return
+    } else {
+        event.target.closest('li').remove();
+        localStorage.removeItem(event.target.closest('li').firstElementChild.getAttribute('id'));
+    }
+}
 
-// Перенос задачи после снятия отметки в скрытый список
-list.addEventListener('click', function(event) {
+list.addEventListener('click', deleteTask);
+
+//Увеличение яркости кнопки удаления
+function highlight(event) {
+    if (event.target.tagName != 'IMG') {
+        return
+    } else {
+        event.target.style.opacity = '1';
+        event.target.style.cursor = 'pointer'
+    }
+}
+
+list.addEventListener('mouseover', highlight);
+
+
+//Уменьшение яркости кнопки удаления
+function removeHighlight(event) {
+    if (event.target.tagName != 'IMG') {
+        return
+    } else {
+        event.target.style.opacity = '.6';
+    }
+}
+
+list.addEventListener('mouseout', removeHighlight);
+
+//Перенос задачи после снятия отметки в скрытый список
+function hideTask(event) {
     if (event.target.tagName != 'INPUT') {
         return
     } else if (buttonHide.className === 'active') {
@@ -125,5 +169,49 @@ list.addEventListener('click', function(event) {
     } else if (event.target.closest('li').firstElementChild.checked != true) {
         event.target.closest('li').classList.toggle('clean');
     }
-})
+}
+
+list.addEventListener('click', hideTask);
+
+
+//Отобразить localStorage при загрузке страницы
+function showTasks() {
+    let existStorage = localStorage.length;
+    if (existStorage > 0) {
+        for(let i = 0; i < existStorage; i++){
+            let key = localStorage.key(i);
+            console.log(key)
+
+            newTask = document.createElement('li');
+            list.append(newTask);
+
+            input = document.createElement('input');
+            input.setAttribute('type', 'checkbox');
+            input.setAttribute('id', key);
+            newTask.append(input);
+            
+            label = document.createElement('label');
+            label.setAttribute('for', i);
+            label.style.paddingLeft ='5px';
+            newTask.append(label);
+            label.innerHTML = localStorage.getItem(key);
+
+            buttonDelete = document.createElement('img');
+            buttonDelete.className = 'delete';
+            buttonDelete.style.marginLeft ='10px';
+            buttonDelete.style.verticalAlign = 'middle';
+            buttonDelete.style.width = '15px';
+            buttonDelete.style.height ='15px';
+            buttonDelete.setAttribute('src','./assets/images/rubbish.png')
+            buttonDelete.style.opacity = '.6';
+            newTask.append(buttonDelete);
+
+            console.log(localStorage.getItem(key))
+        }
+    } else {
+        return
+    }
+}
+
+window.addEventListener('load', showTasks);
 
