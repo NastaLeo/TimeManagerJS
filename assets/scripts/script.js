@@ -177,11 +177,15 @@ list.addEventListener('click', hideTask);
 //Отобразить localStorage при загрузке страницы
 function showTasks() {
     let existStorage = localStorage.length;
+    let keys = Object.keys(localStorage)
     if (existStorage > 0) {
-        for(let i = 0; i < existStorage; i++){
-            let key = localStorage.key(i);
-            console.log(key)
+        for(let key of keys){
 
+            if (!localStorage.hasOwnProperty(key)) {
+                continue; 
+            }
+            console.log(key)
+           
             newTask = document.createElement('li');
             list.append(newTask);
 
@@ -191,7 +195,7 @@ function showTasks() {
             newTask.append(input);
             
             label = document.createElement('label');
-            label.setAttribute('for', i);
+            label.setAttribute('for', key);
             label.style.paddingLeft ='5px';
             newTask.append(label);
             label.innerHTML = localStorage.getItem(key);
