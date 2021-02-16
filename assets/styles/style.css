@@ -36,7 +36,8 @@ div.list-container {
 
 li {
   height: 20px;
-  /* width: 300px; */
+  width: 300px;
+  /* white-space: pre; */
   vertical-align: middle;
   list-style: none; 
   overflow: hidden;
@@ -50,6 +51,14 @@ li.clean {
 
 li input {
   cursor: pointer;
+}
+
+.delete {
+  margin-left: 10px;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  opacity: .6;
 }
 
 button[data-action="add"] {

@@ -11,6 +11,7 @@ let inputReset = document.querySelector('input[type=reset]');
 let inputClose = document.querySelector('input[type=button]');
 
 let list = document.querySelector('.list-container ul');
+let ul = document.querySelector("ul");
 let li = document.getElementsByTagName('li');
 
 
@@ -35,7 +36,6 @@ function hide(elem) {
         
         for(item of li) {
             if (item.firstElementChild.checked != true) {
-                console.log(1)
             item.classList.add('clean');
             }
         }
@@ -89,15 +89,8 @@ function createNewTask(){
 
     let buttonDelete = document.createElement('img');
     buttonDelete.className = 'delete';
-    buttonDelete.style.marginLeft ='10px';
-    buttonDelete.style.verticalAlign = 'middle';
-    buttonDelete.style.width = '15px';
-    buttonDelete.style.height ='15px';
     buttonDelete.setAttribute('src','./assets/images/rubbish.png');
-    buttonDelete.style.opacity = '.6';
     newTask.append(buttonDelete);
-
-    localStorage.setItem(label.getAttribute('for'), label.innerHTML);
 
     if (buttonShow.className === 'active') {
         newTask.classList.add('clean')
@@ -115,6 +108,44 @@ form.addEventListener('submit', function(event) {
         return    
     }
 })
+
+
+Array.from(li).forEach(el => {
+    el.onchange = () => localStorage.setItem(el.id, el.checked);
+    el.checked = localStorage.getItem(el.id) === "true";
+  })
+
+// list.addEventListener("DOMSubtreeModified", function () {
+//     localStorage.setItem("tasks", ul.innerHTML);
+// }, true);
+
+
+// мой   list.addEventListener('MutationObserver', function(event) {
+//     event.preventDefault();})
+    // const config = {
+    //     attributes: true,
+    //     childList: true,
+    //     subtree: true
+    // };
+    // let observer = new MutationObserver(function(mutations) {
+    //     mutations.forEach(function(mutation) {
+    //         console.dir(mutation);
+    //     });    
+    // })
+    // observer.observe(list, config);
+
+
+
+
+
+window.addEventListener("load", function () {
+    ul.innerHTML = localStorage.getItem("tasks");
+    // for(let item of li) {
+    //     item.classList.remove('clean');
+    // }
+});
+
+
 
 //Закрыть окно создания задач
 inputClose.addEventListener('click', function() {
@@ -175,47 +206,42 @@ list.addEventListener('click', hideTask);
 
 
 //Отобразить localStorage при загрузке страницы
-function showTasks() {
-    let existStorage = localStorage.length;
-    let keys = Object.keys(localStorage)
-    if (existStorage > 0) {
-        for(let key of keys){
+// function showTasks() {
+//     let existStorage = localStorage.length;
+//     let keys = Object.keys(localStorage)
+//     if (existStorage > 0) {
+//         for(let key of keys){
 
-            if (!localStorage.hasOwnProperty(key)) {
-                continue; 
-            }
-            console.log(key)
+//             if (!localStorage.hasOwnProperty(key)) {
+//                 continue; 
+//             }
+//             console.log(key)
            
-            newTask = document.createElement('li');
-            list.append(newTask);
+//             newTask = document.createElement('li');
+//             list.append(newTask);
 
-            input = document.createElement('input');
-            input.setAttribute('type', 'checkbox');
-            input.setAttribute('id', key);
-            newTask.append(input);
+//             input = document.createElement('input');
+//             input.setAttribute('type', 'checkbox');
+//             input.setAttribute('id', key);
+//             newTask.append(input);
             
-            label = document.createElement('label');
-            label.setAttribute('for', key);
-            label.style.paddingLeft ='5px';
-            newTask.append(label);
-            label.innerHTML = localStorage.getItem(key);
+//             label = document.createElement('label');
+//             label.setAttribute('for', key);
+//             label.style.paddingLeft ='5px';
+//             newTask.append(label);
+//             label.innerHTML = localStorage.getItem(key);
 
-            buttonDelete = document.createElement('img');
-            buttonDelete.className = 'delete';
-            buttonDelete.style.marginLeft ='10px';
-            buttonDelete.style.verticalAlign = 'middle';
-            buttonDelete.style.width = '15px';
-            buttonDelete.style.height ='15px';
-            buttonDelete.setAttribute('src','./assets/images/rubbish.png')
-            buttonDelete.style.opacity = '.6';
-            newTask.append(buttonDelete);
+//             buttonDelete = document.createElement('img');
+//             buttonDelete.className = 'delete';
+//             buttonDelete.setAttribute('src','./assets/images/rubbish.png')
+//             newTask.append(buttonDelete);
 
-            console.log(localStorage.getItem(key))
-        }
-    } else {
-        return
-    }
-}
+//             console.log(localStorage.getItem(key))
+//         }
+//     } else {
+//         return
+//     }
+// }
 
-window.addEventListener('load', showTasks);
+// window.addEventListener('load', showTasks);
 
