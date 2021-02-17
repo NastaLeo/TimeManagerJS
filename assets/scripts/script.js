@@ -6,14 +6,12 @@ let buttonAdd = document.querySelector('button[data-action=add]');
 let addList = document.querySelector('.add-list');
 let form = document.querySelector('form');
 let inputText = document.querySelector('input[type=text]');
-let inputSubmit = document.querySelector('input[type=submit]');
 let inputReset = document.querySelector('input[type=reset]');
 let inputClose = document.querySelector('input[type=button]');
 
 let list = document.querySelector('.list-container ul');
 let ul = document.querySelector("ul");
 let li = document.getElementsByTagName('li');
-
 
 
 // Обратчик на кнопки
@@ -33,7 +31,6 @@ function hide(elem) {
         buttonHide.classList.remove('active');
         buttonShow.classList.add('active');
 
-        
         for(item of li) {
             if (item.firstElementChild.checked != true) {
             item.classList.add('clean');
@@ -59,6 +56,14 @@ function show(elem) {
 // Добавить новые задачи в список задач
 function add(elem) {
     if (elem.dataset.action === 'add') {
+        if (document.querySelector('footer').getBoundingClientRect().top > document.documentElement.clientHeight) {
+        document.querySelector('footer').scrollIntoView({
+            block: "start", 
+            inline: "nearest",
+            behavior: 'smooth'
+        });    
+        } // Автоматический скролл doesn't work
+
         addList.classList.remove('close');
         addList.classList.add('open');
         buttonAdd.classList.remove('active');
@@ -104,47 +109,18 @@ form.addEventListener('submit', function(event) {
     if (inputText.value != '') {
         createNewTask();
         inputText.value = '';
+
+        if (document.querySelector('footer').getBoundingClientRect().top> document.documentElement.clientHeight) {
+            document.querySelector('footer').scrollIntoView({
+                block: "end", 
+                inline: "nearest",
+                behavior: 'smooth'
+            });    
+        }
     } else {
         return    
     }
 })
-
-
-Array.from(li).forEach(el => {
-    el.onchange = () => localStorage.setItem(el.id, el.checked);
-    el.checked = localStorage.getItem(el.id) === "true";
-  })
-
-// list.addEventListener("DOMSubtreeModified", function () {
-//     localStorage.setItem("tasks", ul.innerHTML);
-// }, true);
-
-
-// мой   list.addEventListener('MutationObserver', function(event) {
-//     event.preventDefault();})
-    // const config = {
-    //     attributes: true,
-    //     childList: true,
-    //     subtree: true
-    // };
-    // let observer = new MutationObserver(function(mutations) {
-    //     mutations.forEach(function(mutation) {
-    //         console.dir(mutation);
-    //     });    
-    // })
-    // observer.observe(list, config);
-
-
-
-
-
-window.addEventListener("load", function () {
-    ul.innerHTML = localStorage.getItem("tasks");
-    // for(let item of li) {
-    //     item.classList.remove('clean');
-    // }
-});
-
 
 
 //Закрыть окно создания задач
@@ -152,7 +128,45 @@ inputClose.addEventListener('click', function() {
     addList.classList.remove('open');
     addList.classList.add('close');
     buttonAdd.classList.add('active');
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+    })
 })
+
+
+//Сохранение состояния чекбокса
+ul.addEventListener('click', function (event) {
+    if (event.target.tagName != 'INPUT') {
+        return
+    } else {
+        if (!event.target.checked) {
+            console.log(1)
+            event.target.checked = false;
+            event.target.setAttribute('checked', false);
+        } else {
+            console.log(2)
+            event.target.checked = true;
+            event.target.setAttribute('checked', true)
+        }
+    }
+})
+
+
+//Перенос задачи после снятия отметки в скрытый список
+function hideTask(event) {
+    if (event.target.tagName != 'INPUT') {
+         return
+    } else if (buttonHide.className === 'active') {
+         return
+    } else if (!event.target.checked) {
+        event.target.setAttribute('checked', false);
+        event.target.closest('li').classList.add('clean');
+    } 
+}
+
+list.addEventListener('click', hideTask);
 
 
 //Удаление задач
@@ -191,57 +205,45 @@ function removeHighlight(event) {
 
 list.addEventListener('mouseout', removeHighlight);
 
-//Перенос задачи после снятия отметки в скрытый список
-function hideTask(event) {
-    if (event.target.tagName != 'INPUT') {
-        return
-    } else if (buttonHide.className === 'active') {
-        return
-    } else if (event.target.closest('li').firstElementChild.checked != true) {
-        event.target.closest('li').classList.toggle('clean');
+
+// Сохранение данных в localStorage
+const config = {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    characterData: true
+};
+
+const callback = function (mutationsList, observer) {
+    
+    for (let mutation of mutationsList) {
+        if (mutation.type === "childList") {
+            console.log(5)
+            localStorage.setItem("tasks", ul.innerHTML);
+        } else if (mutation.type === "attributes") {
+            console.log(6)
+            localStorage.setItem("tasks", ul.innerHTML);
+        } else if (mutation.type === "subtree") {
+            console.log(7)
+            localStorage.setItem("tasks", ul.innerHTML);
+        } else if (mutation.type === "characterData") {
+            console.log(8)
+            localStorage.setItem("tasks", ul.innerHTML);
+        } 
     }
-}
+};
 
-list.addEventListener('click', hideTask);
+const observer = new MutationObserver(callback);
+observer.observe(list, config);
 
 
-//Отобразить localStorage при загрузке страницы
-// function showTasks() {
-//     let existStorage = localStorage.length;
-//     let keys = Object.keys(localStorage)
-//     if (existStorage > 0) {
-//         for(let key of keys){
+// Загрузка и отображение данных из localStorage
+window.addEventListener("load", function (event) {
+    if (localStorage.length > 0) {
+        ul.innerHTML = localStorage.getItem("tasks");   
+    }
+});
 
-//             if (!localStorage.hasOwnProperty(key)) {
-//                 continue; 
-//             }
-//             console.log(key)
-           
-//             newTask = document.createElement('li');
-//             list.append(newTask);
 
-//             input = document.createElement('input');
-//             input.setAttribute('type', 'checkbox');
-//             input.setAttribute('id', key);
-//             newTask.append(input);
-            
-//             label = document.createElement('label');
-//             label.setAttribute('for', key);
-//             label.style.paddingLeft ='5px';
-//             newTask.append(label);
-//             label.innerHTML = localStorage.getItem(key);
 
-//             buttonDelete = document.createElement('img');
-//             buttonDelete.className = 'delete';
-//             buttonDelete.setAttribute('src','./assets/images/rubbish.png')
-//             newTask.append(buttonDelete);
-
-//             console.log(localStorage.getItem(key))
-//         }
-//     } else {
-//         return
-//     }
-// }
-
-// window.addEventListener('load', showTasks);
 

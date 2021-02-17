@@ -30,27 +30,42 @@ button[data-action="hide"] {
 
 div.list-container {
   overflow: hidden;
-  transition: height 0.3s ease-out;
-  margin-left:20px;
+  transition: height 0.3s ease-in;
+}
+/* 
+div.show {
+  height: 200px;
+}
+
+div.hide {
+  height: 35px;
+} */
+
+span {
+  margin-left: 50px;
+  font-weight: 600;
 }
 
 li {
+  margin-top: 0px;
   height: 20px;
   width: 300px;
-  /* white-space: pre; */
   vertical-align: middle;
   list-style: none; 
   overflow: hidden;
-  transition: height 0.3s ease-out;
+  transition: height 0.3s ease-in;
 }
-
 
 li.clean {
   height: 0px;
 }
 
-li input {
+li input:hover {
   cursor: pointer;
+}
+
+ul {
+  padding-left: 20px;
 }
 
 .delete {
@@ -66,11 +81,10 @@ button[data-action="add"] {
 }
 
 div.add-list {
-  margin-left: 30px;
-  max-width: 200px;
+  margin-left: 15px;
+  min-width: 200px;
   overflow: hidden;  
   transition: height 0.3s ease-out;
-  text-align: center;
 }
 
 div.close {
@@ -78,7 +92,7 @@ div.close {
 }
 
 div.open {
-  height: 150px;
+  height: 70px;
 }
 
 form input {
@@ -89,20 +103,33 @@ form input {
 }
 
 input[type='text'] {
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-left: 15px;
   text-indent: 10px;
 }
 
-input[type='submit']  {
-  margin-top: 10px;
-  cursor: pointer;
+input[type='submit']{
+  margin-left: 20px;
 }
 
 input[type='button'] {
+  margin-left: 10px;
+}
+
+input[type='submit'], input[type='button'] {
+  width: 70px;
+  margin-top: 5px;
   cursor: pointer;
+  background-color: rgb(29, 161, 161);
+  color: #fff;
+  opacity: .4;
+  font-size: 900;
+} 
+
+input[type='submit']:hover, input[type='button']:hover {
+  opacity: 1;
 }
 
-main {
-  display: flex;
+footer, .footer {
+  height: 60px;
 }
-

@@ -8,30 +8,32 @@
     <title>Document</title>
 </head>
 <body>
-<div class="wrapper">
-  <div class="buttons-container">
-    <button data-action="add" class="active">Добавить задачу</button>
-    <button data-action="show">Показать список</button>
-    <button data-action="hide" class="active">Скрыть список</button>
-  </div>
+  <div class="wrapper">
 
+    <div class="buttons-container">
+      <button data-action="add" class="active">Добавить задачу</button>
+      <button data-action="show">Показать список</button>
+      <button data-action="hide" class="active">Скрыть список</button>
+    </div>
 
-  <main>
-     <div class='add-list close'>
+    <div class="list-container"></br>
+      <span>
+        Список дел:
+      </span>
+      <ul>
+      </ul>
+    </div>
+  
+    <div class='add-list close'>
       <form>
         <input type="text" name='text' placeholder=' Новая задача' value=''></br>
         <input type="submit" name="submit" value='Добавить'>
-        <input type="button" name="close" value='Завершить'>
+        <input type="button" name="close" value='Закрыть'>
       </form>
     </div>
-   
-    <div class="list-container show">
-      <ul>
-        <b>Список дел:</b>
-      </ul>
-    </div>
-  </main>
-</div>    
+    
+    <footer></footer>
+  </div>    
   <script src="./assets/scripts/script.js"></script>
 </body>
 </html>
