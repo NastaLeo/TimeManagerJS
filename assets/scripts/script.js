@@ -62,7 +62,7 @@ function add(elem) {
             inline: "nearest",
             behavior: 'smooth'
         });    
-        } // Автоматический скролл doesn't work
+        } 
 
         addList.classList.remove('close');
         addList.classList.add('open');
@@ -78,6 +78,7 @@ function createNewTask(){
 
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
+    input.checked === false;
     let label = document.createElement('label');
 
     if (!newTask.previousElementSibling) {
@@ -141,18 +142,14 @@ ul.addEventListener('click', function (event) {
     if (event.target.tagName != 'INPUT') {
         return
     } else {
-        if (!event.target.checked) {
-            console.log(1)
-            event.target.checked = false;
-            event.target.setAttribute('checked', false);
+        if (event.target.checked) {
+            event.target.setAttribute('checked', true);
         } else {
             console.log(2)
-            event.target.checked = true;
-            event.target.setAttribute('checked', true)
+            event.target.removeAttribute('checked')
         }
     }
 })
-
 
 //Перенос задачи после снятия отметки в скрытый список
 function hideTask(event) {
@@ -161,7 +158,7 @@ function hideTask(event) {
     } else if (buttonHide.className === 'active') {
          return
     } else if (!event.target.checked) {
-        event.target.setAttribute('checked', false);
+        event.target.removeAttribute('checked');
         event.target.closest('li').classList.add('clean');
     } 
 }

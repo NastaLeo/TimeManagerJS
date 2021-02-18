@@ -81,6 +81,7 @@ button[data-action="add"] {
 }
 
 div.add-list {
+  display: flex;
   margin-left: 15px;
   min-width: 200px;
   overflow: hidden;  
@@ -117,7 +118,7 @@ input[type='button'] {
 }
 
 input[type='submit'], input[type='button'] {
-  width: 70px;
+  min-width: 70px;
   margin-top: 5px;
   cursor: pointer;
   background-color: rgb(29, 161, 161);
@@ -131,5 +132,5 @@ input[type='submit']:hover, input[type='button']:hover {
 }
 
 footer, .footer {
-  height: 60px;
+  height: 100px;
 }
