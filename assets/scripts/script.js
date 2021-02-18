@@ -145,7 +145,6 @@ ul.addEventListener('click', function (event) {
         if (event.target.checked) {
             event.target.setAttribute('checked', true);
         } else {
-            console.log(2)
             event.target.removeAttribute('checked')
         }
     }
@@ -215,16 +214,12 @@ const callback = function (mutationsList, observer) {
     
     for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
-            console.log(5)
             localStorage.setItem("tasks", ul.innerHTML);
         } else if (mutation.type === "attributes") {
-            console.log(6)
             localStorage.setItem("tasks", ul.innerHTML);
         } else if (mutation.type === "subtree") {
-            console.log(7)
             localStorage.setItem("tasks", ul.innerHTML);
         } else if (mutation.type === "characterData") {
-            console.log(8)
             localStorage.setItem("tasks", ul.innerHTML);
         } 
     }
