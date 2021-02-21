@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./src/assets/images/planner.png">
+    <link rel="stylesheet" href="./src/assets/styles/style.css"/>
+    <title>TasksManager</title>
+<script defer src="bundle.js"></script></head>
+<body>
+  <div class="wrapper">
+
+    <div class="header">
+      <div class="button-container">
+        <button data-action="add" class="active">Добавить задачу</button>
+
+        <div class='add-list close'>
+          <form>
+            <input type="text" name='text' placeholder=' Новая задача' value=''>
+            <input type="submit" name="submit" value='Добавить'>
+            <input type="button" name="close" value='Закрыть'>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-container">
+
+      <div class='not-important-tasks'>
+        <span>
+        Неважные дела
+        </span>
+        <ul>
+        </ul>
+      </div>
+
+      <div class='important-tasks'>
+        <span>
+        Важные дела
+        </span>
+        <ul>
+        </ul>
+      </div>
+
+      <div class='urgent-tasks'>
+        <span>
+        Cрочные дела
+        </span>
+        <ul>
+        </ul>
+      </div>
+      
+    </div>
+  
+  </div>    
+  <script src="./src/script.js"></script>
+</body>
+</html>
+
+
+ 
